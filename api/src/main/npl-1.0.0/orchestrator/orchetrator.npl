@@ -1,0 +1,36 @@
+package orchestrator
+
+notification requestSubmitted(request: Request, requirements: Text) returns Unit;
+notification requestFulfilled(request: Request, response: Ticket) returns Unit;
+
+@api
+protocol[user, slack, worker] Request(
+    var contents: Text
+) {
+    require(contents != "", "Requirements must not be empty");
+
+    initial state submitted;
+    final state fulfilled;
+
+    private var ticket = optionalOf<Ticket>();
+
+    init {
+        notify requestSubmitted(this, contents);
+    }
+
+    @api
+    permission[worker] fulfill(ticket: Ticket) | submitted {
+        notify requestFulfilled(this, ticket);
+        this.ticket = optionalOf(ticket);
+    };
+
+    @api
+    permission[user] retrieveTicket() returns Ticket | fulfilled {
+        return this.ticket.getOrFail();
+    };
+};
+
+struct Ticket {
+    title: Text,
+    contents: Text
+}

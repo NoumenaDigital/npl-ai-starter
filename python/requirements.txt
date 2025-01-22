@@ -1,0 +1,11 @@
+aiohttp==3.11.11
+botbuilder-core==4.16.2
+botbuilder-schema==4.16.2
+fastapi==0.115.6
+langchain-core>=0.3.21,<0.4.0
+langchain-openai>=0.2.12,<0.3.0
+openai==1.59.7
+python-dotenv==1.0.1
+requests==2.31.0
+sseclient-py==1.8.0
+uvicorn==0.34.0

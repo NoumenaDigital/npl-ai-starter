@@ -1,0 +1,58 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+/venv/
+/python/slack_connector/venv/
+/python/slack_connector/connector/openapi_client/
+/python/slack_connector/connector/.openapi-generator-ignore
+/python/slack_connector/connector/openapi_client_README.md
+/python/generated/
+/python/.env
+/python/workbook.ipynb
+/.idea/
+/python/.ipynb_checkpoints/workbook-checkpoint.ipynb
+/.idea/jupyter-settings.xml
+
+### Environment Files ###
+**/.env
+!**/.env.example
+/python/npl_agent.egg-info/
+/npl_agent.egg-info/SOURCES.txt
+/npl_agent.egg-info/dependency_links.txt
+/npl_agent.egg-info/PKG-INFO
+/npl_agent.egg-info/top_level.txt
