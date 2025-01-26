@@ -1,12 +1,18 @@
 import logging
+from typing import Union
 
 from agent_worker.config import AppConfig
-from agent_worker.services.openai_service import OpenAIService, OpenAIError
+from agent_worker.services.azure_openai_service import AzureOpenAIService, AzureOpenAIError
+from agent_worker.services.base_service import BaseLLMService, LLMServiceError
+from agent_worker.services.bedrock_service import BedrockService, BedrockError
 from client.api import NplApiClient, ApiError
 from client.handlers.notification_handler import BaseNotificationHandler
 from client.models.notification_models import ApiNotification
 
 logger = logging.getLogger(__name__)
+
+LLMService = Union[AzureOpenAIService, BedrockService]
+LLMError = Union[AzureOpenAIError, BedrockError]
 
 
 class NotificationError(Exception):
@@ -22,11 +28,15 @@ class RequestProcessingError(NotificationError):
 class AgentNotificationHandler(BaseNotificationHandler):
     """Agent-specific notification handler"""
 
-    def __init__(self, config: AppConfig, openai_service: OpenAIService):
+    def __init__(
+            self,
+            config: AppConfig,
+            llm_service: BaseLLMService
+    ):
         self.config = config
-        self.openai_service = openai_service
+        self.llm_service = llm_service
         self.api_client = NplApiClient(api_url=config.api_url)
-        logger.info("AgentNotificationHandler initialized with config and OpenAI service")
+        logger.info(f"AgentNotificationHandler initialized with {config.llm_provider} service")
 
     def handle_notification(self, notification: ApiNotification) -> None:
         """
@@ -67,7 +77,7 @@ class AgentNotificationHandler(BaseNotificationHandler):
         try:
             logger.debug(f"Processing request with content: {request.content.text}")
             logger.debug("Parsing requirements into ticket structure...")
-            ticket = self.openai_service.parse_requirements_to_ticket(request.content.text)
+            ticket = self.llm_service.parse_requirements_to_ticket(request.content.text)
             logger.debug(f"Parsed ticket: {ticket}")
 
             formatted_response = (
@@ -86,8 +96,8 @@ class AgentNotificationHandler(BaseNotificationHandler):
                 self._send_error_response(request.ref, str(e))
                 raise RequestProcessingError(error) from e
 
-        except OpenAIError as e:
-            error = f"OpenAI service error while processing request {request.ref}"
+        except LLMServiceError as e:
+            error = f"LLM service error while processing request {request.ref}"
             logger.error(f"{error}: {e}")
             self._send_error_response(request.ref, str(e))
             raise RequestProcessingError(error) from e

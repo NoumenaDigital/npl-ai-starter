@@ -6,6 +6,4 @@ setup(
     package_dir={"": "python"},
     packages=find_packages(where="python"),
     python_requires=">=3.8",
-    install_requires=[
-    ]
 )
