@@ -24,6 +24,14 @@ Once you have the NPL API running, you will need to configure the users (`slackb
 Keycloak instance associated with your NPL application. Navigate to the Keycloak admin console, select the `noumena`
 realm, and create the users. Make sure to set the password for each user.
 
+Before running the Python application, set up your Python environment (e.g virtualenv) and install the requirements. You
+can invoke the `install-requirements` `Make` target in order to generate the OpenAPI client and install it along with the
+other requirements and the local packages:
+
+```shell
+make install-requirements
+```
+
 The agent worker application can then be run like so, provided that you've configured your .env file correctly (
 including one of the LLM providers detailed further down):
 
