@@ -1,0 +1,13 @@
+requests~=2.32.0
+pydantic~=2.10.6
+typing_extensions~=4.12.2
+urllib3~=2.3.0
+python-dateutil~=2.9.0.post0
+setuptools~=75.8.0
+langchain-aws~=0.2.11
+langchain-core~=0.3.31
+langchain-openai~=0.2.14
+python-dotenv~=1.0.1
+slack_bolt~=1.22.0
+uvicorn~=0.34.0
+fastapi~=0.115.6
