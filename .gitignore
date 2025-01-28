@@ -56,3 +56,4 @@ build/
 /npl_agent.egg-info/dependency_links.txt
 /npl_agent.egg-info/PKG-INFO
 /npl_agent.egg-info/top_level.txt
+*.egg-info/
