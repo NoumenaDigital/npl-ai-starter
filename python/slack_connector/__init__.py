@@ -1,0 +1,3 @@
+"""
+Slack connector package
+"""
