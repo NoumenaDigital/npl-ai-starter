@@ -14,5 +14,4 @@ clean:
 install-requirements: generate_client
 	# Make sure venv is activated
 	pip install -r requirements.txt
-	pip install -e python/generated
 	pip install -e .
