@@ -8,9 +8,42 @@ This project aims to get you started with NPL AI orchestration. It has some mini
 - How to consume NPL notifications for async processing
 - How to generate and use an OpenAPI client using the generated NPL OpenAPI spec
 
+The toy example provided is a simple chat where the user provides unstructured business requirements, and is provided
+with a structured technical implementation ticket in response. A protocol is instantiated when the user sends a message,
+and notifications are used to asynchronously process the user's message and respond with the ticket.
+
 ## Getting started
 
-The .env.example files indicate which variables you will need to provide in order to run the examples. You can copy them to .env files and fill in the blanks.
+The .env.example files indicate which variables you will need to provide in order to run the examples. You can copy them
+to .env files and fill in the blanks.
+
+This project assumes that the NPL API is deployed to Noumena Cloud (a local Docker setup is possible, but somewhat more
+complex, and is thus not covered here).
+
+Once you have the NPL API running, you will need to configure the users (`slackbot`, `teamsbot`, `worker`) in the
+Keycloak instance associated with your NPL application. Navigate to the Keycloak admin console, select the `noumena`
+realm, and create the users. Make sure to set the password for each user.
+
+The agent worker application can then be run like so, provided that you've configured your .env file correctly (
+including one of the LLM providers detailed further down):
+
+```shell
+python -m agent_worker.agent_worker_app
+```
+
+Then choose either the Slack or Teams connector to run:
+
+```shell
+python -m slack_connector.slack_connector_app
+```
+
+or
+
+```shell
+python -m teams_connector.teams_connector_app
+```
+
+See below for notes on what else is required to run each connector.
 
 ### Slack
 
